@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Links</title>
+
+    <!-- Aplica o tema antes da renderização (evita "flash") -->
+    <script>
+        try {
+            var t = localStorage.getItem('theme');
+            if (/^[1-5]$/.test(t)) document.documentElement.dataset.theme = t;
+        } catch (e) {}
+    </script>
+
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+    <div class="window">
+        <div class="titlebar">
+            <span>C:\Windows\System32\cmd.exe - links</span>
+            <span class="wbtn">_ &#9633; X</span>
+        </div>
+
+        <div class="screen">
+            <pre class="banner" id="banner"></pre>
+
+            <div class="prompt-line" role="search">
+                <label for="searchInput" id="promptLabel">C:\Links&gt;</label>
+                <div class="field"><span id="typed"></span><span class="cursor" aria-hidden="true"></span><span id="hint">digite ajuda ou pesquise</span><input type="text" id="searchInput" aria-label="Pesquisar links ou digitar um comando" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus></div>
+            </div>
+
+            <div id="app" hidden>
+                <pre class="out" id="out" aria-live="polite" hidden></pre>
+
+            <main id="container"></main>
+                <p class="empty" id="emptyMsg" hidden></p>
+                <p class="summary" id="summary"></p>
+            </div>
+
+            <footer class="rodape">
+                Criado por: <span id="creator"></span> | Ultima atualizacao: <span id="lastUpdate"></span>
+            </footer>
+        </div>
+    </div>
+
+    <script src="JS/links-data.js"></script>
+    <script src="JS/script.js"></script>
+</body>
+</html>

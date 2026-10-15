@@ -1,0 +1,89 @@
+/* Tema 1: CMD classico (padrao) */
+:root {
+    --bg: #0c0c0c; --bar: #1f1f1f; --fg: #cccccc; --dim: #767676;
+    --accent: #f9f1a5; --link: #61d6d6; --ok: #16c60c; --line: #3a3a3a; --err: #e74856;
+    --font: "Cascadia Mono", Consolas, "Lucida Console", "DejaVu Sans Mono", monospace;
+    color-scheme: dark;
+}
+/* Tema 2: verde fosforo (com efeito CRT) */
+:root[data-theme="2"] {
+    --bg: #000000; --bar: #062006; --fg: #33ff33; --dim: #1d9e1d;
+    --accent: #b6ffb6; --link: #33ff33; --ok: #b6ffb6; --line: #145214; --err: #ff6b6b;
+}
+/* Tema 3: ambar (com efeito CRT) */
+:root[data-theme="3"] {
+    --bg: #0a0600; --bar: #1c1100; --fg: #ffb000; --dim: #a06b00;
+    --accent: #ffd24a; --link: #ffb000; --ok: #ffd24a; --line: #4a3200; --err: #ff6b6b;
+}
+/* Tema 4: azul PowerShell */
+:root[data-theme="4"] {
+    --bg: #012456; --bar: #001a3d; --fg: #eeedf0; --dim: #8fa6c9;
+    --accent: #ffff8a; --link: #61d6d6; --ok: #b4e86a; --line: #2f4f8a; --err: #ff8a8a;
+}
+/* Tema 5: claro */
+:root[data-theme="5"] {
+    --bg: #f2f2f2; --bar: #dcdcdc; --fg: #1e1e1e; --dim: #6b6b6b;
+    --accent: #7a5c00; --link: #0b5cad; --ok: #107c10; --line: #c4c4c4; --err: #c50f1f;
+    color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; background: var(--bar); }
+body { font: 15px/1.5 var(--font); color: var(--fg); padding: 12px; }
+
+.window { position: relative; max-width: 1100px; margin: 0 auto; border: 1px solid var(--line); background: var(--bg); }
+.titlebar { display: flex; justify-content: space-between; gap: 12px; padding: 6px 10px; background: var(--bar); border-bottom: 1px solid var(--line); font-size: 13px; }
+.wbtn { color: var(--dim); white-space: nowrap; }
+.screen { padding: 14px 16px 20px; }
+.banner { margin: 0 0 12px; color: var(--dim); white-space: pre-wrap; font: inherit; min-height: 7.5em; }
+
+button { font: inherit; color: var(--fg); background: none; border: 0; padding: 0 2px; cursor: pointer; }
+button:hover, button:focus-visible { background: var(--fg); color: var(--bg); outline: none; }
+
+/* prompt com cursor de bloco */
+.prompt-line { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.prompt-line label { color: var(--accent); white-space: nowrap; }
+.field { position: relative; flex: 1; min-width: 0; overflow: hidden; white-space: pre; cursor: text; }
+.field input { position: absolute; inset: 0; width: 100%; opacity: 0; border: 0; padding: 0; background: none; font: inherit; font-size: 16px; }
+.cursor { display: inline-block; width: .6em; height: 1.1em; background: var(--fg); vertical-align: text-bottom; animation: blink 1s steps(1) infinite; }
+.field:not(:focus-within) .cursor { animation: none; opacity: .35; }
+#hint { color: var(--dim); margin-left: 1.5ch; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* saida de comandos */
+.out { margin: 0 0 14px; padding-left: 10px; border-left: 2px solid var(--accent); white-space: pre-wrap; font: inherit; }
+
+.section { margin-bottom: 16px; }
+.sec-title { color: var(--accent); font-weight: bold; padding: 0 2px; }
+.sec-title:hover, .sec-title:focus-visible { background: var(--accent); color: var(--bg); }
+.section.collapsed .sec-title::after { content: " ..."; color: var(--dim); font-weight: normal; }
+.links { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 2px 18px; padding: 6px 0 4px 14px; }
+
+.link-row { min-width: 0; }
+.link-row a { color: var(--link); text-decoration: none; display: flex; align-items: center; gap: 6px; min-width: 0; padding: 0 2px; }
+.link-row a::before { content: ">"; color: var(--dim); }
+.link-row a:hover, .link-row a:focus-visible, .link-row a.sel { background: var(--link); color: var(--bg); outline: none; }
+.link-row a:hover::before, .link-row a:focus-visible::before, .link-row a.sel::before { color: var(--bg); }
+.link-row img { width: 16px; height: 16px; object-fit: contain; flex: none; }
+.link-row .txt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.badge { color: var(--bg); background: var(--ok); padding: 0 4px; font-size: 12px; flex: none; }
+
+.empty { color: var(--err); margin: 0; }
+.summary { color: var(--dim); margin: 6px 0 0; }
+.rodape { margin-top: 24px; padding-top: 8px; border-top: 1px dashed var(--line); color: var(--dim); font-size: 13px; overflow: hidden; white-space: nowrap; }
+.rodape span { color: var(--fg); }
+
+/* efeito CRT: so nos temas verde e ambar */
+:root[data-theme="2"] .screen, :root[data-theme="3"] .screen { text-shadow: 0 0 6px color-mix(in srgb, var(--fg) 50%, transparent); }
+:root[data-theme="2"] .window::after, :root[data-theme="3"] .window::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(0, 0, 0, .16) 3px);
+}
+
+@media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+@media (max-width: 560px) {
+    body { padding: 0; font-size: 14px; }
+    .titlebar span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .links { grid-template-columns: 1fr; }
+    #hint { display: none; }
+}
